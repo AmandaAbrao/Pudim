@@ -9,6 +9,9 @@ public class GameController : MonoBehaviour {
     public float espera;
     public GameObject obstaculo;
     public float tempodeDestruicao;
+    public GameObject menu;
+    public GameObject canvas;
+
 
     public static GameController instancia = null;
 
@@ -40,8 +43,11 @@ public class GameController : MonoBehaviour {
         }
 	}
 
-    public void PlayerComecou() {
+    public void PlayerComecou()
+    {
         estado = Estado.Jogando;
+        menu.SetActive(false);
+        canvas.SetActive(false);
         StartCoroutine(GerarObstaculos());
     }
 
