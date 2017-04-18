@@ -20,6 +20,12 @@ public class GameController : MonoBehaviour {
         txtPontos.text = "" + x;
     }
 
+    public void acrescentarPontos(int x)
+    {
+        atualizarPontos(pontos + x);
+
+    }
+
 
 
     public static GameController instancia = null;

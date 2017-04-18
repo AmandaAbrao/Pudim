@@ -9,6 +9,7 @@ public class CoelhoMove : MonoBehaviour {
     public float min;
     public float max;
     public float espera;
+  
 
     private GameObject player;
     private bool pontuou;
@@ -36,6 +37,14 @@ public class CoelhoMove : MonoBehaviour {
     void Update() {
         Vector3 velocidadevetorial = Vector3.left * velocidadeh;
         transform.position = transform.position + velocidadevetorial * Time.deltaTime;
+        if (GameController.instancia.estado == Estado.Jogando)
+        {
+            if (!pontuou && transform.position.x < player.gameObject.transform.position.x)
+            {
+                pontuou = true;
+                GameController.instancia.acrescentarPontos(1);
+            }
+        }
 
     }
 }
