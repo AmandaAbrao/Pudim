@@ -24,7 +24,7 @@ public class PudimController : MonoBehaviour
 
     void Update()
     {
-        if (GameController.instancia.estado == Estado.Jogando || GameController.instancia.estado == Estado.AguardandoComecar)
+        if (GameController.instancia.estado == Estado.Jogando)
         {
             if (Input.GetMouseButtonDown(0))
             {
@@ -32,10 +32,8 @@ public class PudimController : MonoBehaviour
                 audiosource.PlayOneShot(somPulo);
                 rb.useGravity = true;
                 pulando = true;
-                if (GameController.instancia.estado == Estado.AguardandoComecar)
-                {
-                    GameController.instancia.PlayerComecou();
-                }
+                
+
             }
         }
     }

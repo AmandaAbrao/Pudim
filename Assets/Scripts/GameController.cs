@@ -1,16 +1,25 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour {
 
-    public Estado estado { get; private set; } 
-
+    public Estado estado { get; private set; }
+    private int pontos;
+    public Text txtPontos;
     public float espera;
     public GameObject obstaculo;
     public float tempodeDestruicao;
     public GameObject menu;
-    public GameObject canvas;
+    public GameObject PainelMenu;
+
+    private void atualizarPontos(int x)
+    {
+        pontos = x;
+        txtPontos.text = "" + x;
+    }
+
 
 
     public static GameController instancia = null;
@@ -45,11 +54,14 @@ public class GameController : MonoBehaviour {
 
     public void PlayerComecou()
     {
+        
         estado = Estado.Jogando;
         menu.SetActive(false);
-        canvas.SetActive(false);
+        PainelMenu.SetActive(false);
+        atualizarPontos(0);
         StartCoroutine(GerarObstaculos());
     }
+
 
     public void PlayerMorreu() {
         estado = Estado.GameOver;

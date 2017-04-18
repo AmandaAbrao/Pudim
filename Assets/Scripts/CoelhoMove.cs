@@ -10,9 +10,13 @@ public class CoelhoMove : MonoBehaviour {
     public float max;
     public float espera;
 
+    private GameObject player;
+    private bool pontuou;
 
     void Start() {
-        StartCoroutine(Move(max));
+        StartCoroutine(Move(min));
+        player = GameObject.Find("pu (1)");
+        pontuou = false;        
     }
 
     IEnumerator Move(float destino) {
@@ -31,7 +35,7 @@ public class CoelhoMove : MonoBehaviour {
     }
     void Update() {
         Vector3 velocidadevetorial = Vector3.left * velocidadeh;
-
         transform.position = transform.position + velocidadevetorial * Time.deltaTime;
+
     }
 }
