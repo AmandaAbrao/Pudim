@@ -11,8 +11,8 @@ public class GameController : MonoBehaviour {
     public float espera;
     public GameObject obstaculo;
     public float tempodeDestruicao;
-    public GameObject menu;
-    public GameObject PainelMenu;
+    public GameObject menuCamera;
+    public GameObject menuPanel;
 
     private void atualizarPontos(int x)
     {
@@ -60,16 +60,19 @@ public class GameController : MonoBehaviour {
 
     public void PlayerComecou()
     {
-        
         estado = Estado.Jogando;
-        menu.SetActive(false);
-        PainelMenu.SetActive(false);
+        menuCamera.SetActive(false);
+        menuPanel.SetActive(false);
         atualizarPontos(0);
         StartCoroutine(GerarObstaculos());
     }
 
-
     public void PlayerMorreu() {
         estado = Estado.GameOver;
+    }
+
+    public void incrementarPontos(int x)
+    {
+        atualizarPontos(pontos + x);
     }
 }

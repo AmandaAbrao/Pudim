@@ -2,26 +2,34 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CoelhoMove : MonoBehaviour {
+public class CoelhoMove : MonoBehaviour
+{
 
     public float velocidadev;
     public float velocidadeh;
     public float min;
     public float max;
     public float espera;
-  
-
     private GameObject player;
-    private bool pontuou;
+    private bool pontuou = false;
 
-    void Start() {
-        StartCoroutine(Move(min));
-        player = GameObject.Find("pu (1)");
-        pontuou = false;        
+    void Start()
+    {
+        StartCoroutine(Move(max));
+     
     }
 
-    IEnumerator Move(float destino) {
-        while (Mathf.Abs(destino - transform.position.y) > 0.5f) {
+    private void Awake()
+    {
+        player = GameObject.Find("pu (1)");
+    }
+
+
+
+    IEnumerator Move(float destino)
+    {
+        while (Mathf.Abs(destino - transform.position.y) > 0.5f)
+        {
             Vector3 direcao = (destino == max) ? Vector3.up : Vector3.down;
             Vector3 velocidadeVetorial = direcao * velocidadev;
             transform.position = transform.position + velocidadeVetorial * Time.deltaTime;
@@ -34,17 +42,18 @@ public class CoelhoMove : MonoBehaviour {
         StartCoroutine(Move(destino));
 
     }
-    void Update() {
-        Vector3 velocidadevetorial = Vector3.left * velocidadeh;
-        transform.position = transform.position + velocidadevetorial * Time.deltaTime;
-        if (GameController.instancia.estado == Estado.Jogando)
+    void Update()
+    {
+        Vector3 velocidadeVetorial = Vector3.left * velocidadeh;
+        transform.position = transform.position + velocidadeVetorial * Time.deltaTime;
+        if (!pontuou && GameController.instancia.estado == Estado.Jogando)
         {
-            if (!pontuou && transform.position.x < player.gameObject.transform.position.x)
+            if (transform.position.x < player.transform.position.x)
             {
-                pontuou = true;
                 GameController.instancia.acrescentarPontos(1);
+                pontuou = true;
             }
         }
-
     }
 }
+ 
