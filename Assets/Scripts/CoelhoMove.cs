@@ -21,7 +21,7 @@ public class CoelhoMove : MonoBehaviour
 
     private void Awake()
     {
-        player = GameObject.Find("pu (1)");
+        player = GameObject.Find("pu");
     }
 
 

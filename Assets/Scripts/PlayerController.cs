@@ -13,14 +13,34 @@ public class PlayerController : MonoBehaviour {
     private bool pulando = false;
     private AudioSource audiosource;
 
-	void Start () {
+    private Vector3 posicaoInicial;
+    private Quaternion rotacaoInicial;
 
+     
+
+
+    void Start () {
+
+        posicaoInicial = transform.localPosition;
+        rotacaoInicial = transform.localRotation;
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
         audiosource = GetComponent<AudioSource>();
+
 	}
-	
-	void Update () {
+
+    public void recomecar()
+    {
+        rb.useGravity = false;
+        rb.velocity = Vector3.zero;
+        rb.detectCollisions = true;
+        transform.localPosition = posicaoInicial;
+        transform.localRotation = rotacaoInicial;
+    }
+
+
+
+    void Update () {
         if (GameController.instancia.estado == Estado.Jogando || GameController.instancia.estado == Estado.AguardandoComecar)
         {
             if (Input.GetMouseButtonDown(0))
