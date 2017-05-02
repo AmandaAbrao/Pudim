@@ -16,7 +16,7 @@ public class GameController : MonoBehaviour {
     public GameObject pontosPanel;
     public Text txtMaiorPontuacao;
     public Text txtPontos;
-
+    private List<GameObject> obstaculos;
 
     private void atualizarPontos(int x)
     {
@@ -48,6 +48,7 @@ public class GameController : MonoBehaviour {
 
     void Start () {
 
+        obstaculos = new List<GameObject>();
         estado = Estado.AguardandoComecar;
         PlayerPrefs.SetInt("HighScore", 0);
         menuCamera.SetActive(true);
@@ -57,11 +58,22 @@ public class GameController : MonoBehaviour {
 
     }
 
+    IEnumerator DestruirObstaculo(GameObject obj)
+    {
+        yield return new WaitForSeconds(tempodeDestruicao);
+        if (obstaculos.Remove(obj))
+        {
+            Destroy(obj);
+        }
+    }
+
+
     IEnumerator GerarObstaculos () {
         while (GameController.instancia.estado == Estado.Jogando) {
             Vector3 pos = new Vector3(14f, Random.Range(3.5f, 9.5f), 0f);
             GameObject obj = Instantiate(obstaculo, pos, Quaternion.Euler(0f, -90f, 0f)) as GameObject;
-            Destroy(obj, tempodeDestruicao);
+            obstaculos.Add(obj);
+            StartCoroutine(DestruirObstaculo(obj));
             yield return new WaitForSeconds(espera);
 
         }
@@ -74,11 +86,13 @@ public class GameController : MonoBehaviour {
         menuPanel.SetActive(false);
         pontosPanel.SetActive(true);
         atualizarPontos(0);
+        StopAllCoroutines();
         StartCoroutine(GerarObstaculos());
     }
 
     public void PlayerMorreu() {
         estado = Estado.GameOver;
+        StopAllCoroutines();
 
         if (pontos > PlayerPrefs.GetInt("HighScore"))
         {
@@ -96,6 +110,15 @@ public class GameController : MonoBehaviour {
 
     public void PlayerVoltou()
     {
+
+        while (obstaculos.Count > 0)
+        {
+            GameObject obj = obstaculos[0];
+            if (obstaculos.Remove(obj))
+            {
+                Destroy(obj);
+            }
+        }
         estado = Estado.AguardandoComecar;
         menuCamera.SetActive(true);
         menuPanel.SetActive(true);
