@@ -44,7 +44,7 @@ public class PudimController : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0))
             {
-                anim.Play("Pulando");
+                anim.Play("pulando");
                 audiosource.PlayOneShot(somPulo);
                 rb.useGravity = true;
                 pulando = true;
@@ -56,6 +56,7 @@ public class PudimController : MonoBehaviour
             }
         }
     }
+
 
     void FixedUpdate()
     {
@@ -75,10 +76,11 @@ public class PudimController : MonoBehaviour
             {
                 rb.AddForce(new Vector3(-50f, 20f, 0), ForceMode.Impulse);
                 rb.detectCollisions = false;
-                anim.Play("Morrendo");
+                anim.Play("morrendo");
                 audiosource.PlayOneShot(somMorte);
                 GameController.instancia.PlayerMorreu();
             }
         }
     }
 }
+
