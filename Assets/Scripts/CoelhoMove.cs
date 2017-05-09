@@ -15,7 +15,8 @@ public class CoelhoMove : MonoBehaviour
 
     void Start()
     {
-        StartCoroutine(Move(max));
+        float destino = (Random.Range(0f, 01) < 0.5) ? max : min;
+        StartCoroutine(Move(destino));
      
     }
 
